@@ -4,7 +4,7 @@ $inputPwd = $_POST['input_pwd'];
 
 $mysqli = new mysqli("localhost", "root", "root", "php_board");
 $mysqli->set_charset('utf8');
-$result = $mysqli -> query("SELECT * FROM users WHERE email = $inputEmail AND password = $inputPwd");
+$result = $mysqli -> query("SELECT * FROM users WHERE email = '"."$inputEmail"."' AND password = '"."$inputPwd"."'");
 $mysqli -> close();
 
 if (($result -> num_rows) > 0) {
