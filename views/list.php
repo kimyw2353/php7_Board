@@ -1,4 +1,5 @@
 <?php
+session_start();
 $mysqli = new mysqli("localhost", "root", "root", "php_board");
 $mysqli -> set_charset('utf8');
 $total = $mysqli -> query("SELECT * FROM posts");
@@ -44,7 +45,7 @@ if (($total -> num_rows) > 0) {
 	<body>
 		<h1>글목록</h1>
 		<a href="index.php">홈으로</a>
-		<table>
+		<table border="1">
 			<thead>
 			<tr>
 				<td>글번호</td>
@@ -52,6 +53,13 @@ if (($total -> num_rows) > 0) {
 				<td>작성자</td>
 				<td>작성일</td>
 				<td>수정일</td>
+				<?php
+				if (isset($_SESSION['userId'])) :
+				?>
+				<td></td>
+				<?php
+				endif;
+				?>
 			</tr>
 			</thead>
 			<tbody>
@@ -60,24 +68,39 @@ if (($total -> num_rows) > 0) {
 				$id = $posts -> p_id;
 				$title = $posts -> title;
 				$name = $posts -> name;
+				$postUserID = $posts -> u_id;
 				$created_at = $posts -> created_at;
 				$updated_at = $posts -> updated_at;
 				?>
 				<tr>
-					<td><?php
-						echo $id ?></td>
-					<td><a href="post.php?id=<?=$id?>"><?php
-							echo $title ?></a></td>
-					<td><?php
-						echo $name ?></td>
-					<td><a href="delete.php?=//주소창으로 삭제 못하게 막아야함"></a></td>
-					<td><?php
-						echo $created_at ?></td>
-					<td><?php
-						echo $updated_at ?></td>
-				</tr>
+				<td><?php
+					echo $id ?></td>
+				<td><a href="post.php?id=<?= $id ?>"><?php
+						echo $title ?></a></td>
+				<td><?php
+					echo $name ?></td>
+				<td><?php
+					echo $created_at ?></td>
+				<td><?php
+					echo $updated_at ?></td>
 				<?php
-			}
+				if (isset($_SESSION['userId'])) :
+					?>
+					<td>
+					<?php
+					if ($_SESSION['userId'] == $postUserID) :
+						?>
+						<a href="delete.php?=//주소창으로 삭제 못하게 막아야">[삭제]</a>
+					<?php
+					endif;
+					?>
+						</td>
+				<?php
+				endif;
+				?>
+					</tr>
+			<?php
+			};
 			?>
 			</tbody>
 		</table>
