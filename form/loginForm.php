@@ -1,6 +1,6 @@
 <?php
-$inputEmail = $_POST['input_email'];
-$inputPwd = $_POST['input_pwd'];
+$inputEmail = trim($_POST['input_email']);
+$inputPwd = trim($_POST['input_pwd']);
 
 $mysqli = new mysqli("localhost", "root", "root", "php_board");
 $mysqli->set_charset('utf8');

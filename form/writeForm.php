@@ -1,8 +1,8 @@
 <?php
 session_start();
 $userId = $_POST['userId'];
-$inputTitle = $_POST['input_title'];
-$inputContents = $_POST['input_contents'];
+$inputTitle = trim($_POST['input_title']);
+$inputContents = trim($_POST['input_contents']);
 
 $mysqli = new mysqli("localhost", "root", "root", "php_board");
 $mysqli->set_charset('utf8');
