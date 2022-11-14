@@ -39,20 +39,8 @@ if (($result -> num_rows) > 0) {
 			<a href="update.php?postId=<?=$postId?>">수정하기</a>
 			<?php endif; ?>
 		</div>
-		<div>
-			<h2>댓글 목록</h2>
-			<table>
-				<thead>
-				
-				</thead>
-				<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+		<?php
+		require_once "comment.php";
+		?>
 	</body>
 </html>
