@@ -1,11 +1,19 @@
 <?php
+$mysqli = new mysqli("localhost", "root", "root", "php_board");
+$mysqli -> set_charset('utf8');
+
 $inputName = trim($_POST['input_name']);
 $inputEmail = trim($_POST['input_email']);
 $inputPwd = trim($_POST['input_pwd']);
 
-$mysqli = new mysqli("localhost", "root", "root", "php_board");
-$mysqli->set_charset('utf8');
-$checkEmail = $mysqli -> query("SELECT * FROM users WHERE email = '".$inputEmail."'");
+$sql = "
+SELECT *
+FROM users
+WHERE email = '".$inputEmail."'
+";
+
+$checkEmail = $mysqli -> query($sql);
+
 if (($checkEmail -> num_rows) > 0) {
 	$mysqli -> close();
 	?>
@@ -16,8 +24,13 @@ if (($checkEmail -> num_rows) > 0) {
 	<?php
 } else {
 	
-	$result = $mysqli -> query("INSERT INTO php_board.users VALUES (DEFAULT, '".$inputEmail."', '".$inputName."', '".$inputPwd."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
-	echo $mysqli -> error;
+	$sql = "
+	INSERT INTO php_board.users
+	VALUES (DEFAULT, '".$inputEmail."', '".$inputName."', '".$inputPwd."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+	";
+	
+	$result = $mysqli -> query(sql);
+	$mysqli -> close();
 	
 	if (!$result) {
 		?>

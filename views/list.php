@@ -4,19 +4,20 @@ $mysqli = new mysqli("localhost", "root", "root", "php_board");
 $mysqli -> set_charset('utf8');
 
 //페이징 처리
+$category = "";
+$keyword = "";
 //- 게시물 총 개수 구하기
 $totalSql = "SELECT * FROM posts AS p
 JOIN users AS u
 ON p.user_id = u.id";
 
-$category = "";
-$keyword = "";
 if (!empty($_GET['category']) && !empty($_GET['keyword'])) {
 	$category = trim($_GET['category']);
 	$keyword = trim($_GET['keyword']);
 	$totalSql .= " WHERE ".$category." like '%".$keyword."%'";
 }
 $total = $mysqli -> query($totalSql);
+
 if (isset($_GET['page'])) {
 	$page = $_GET['page'];
 } else {
@@ -54,6 +55,7 @@ if (!$total) {
 			LIMIT $startNum, $list";
 		
 		$result = $mysqli -> query($sql);
+		$mysqli -> close();
 		
 	}
 }
@@ -105,7 +107,7 @@ if (!$total) {
 			</thead>
 			<tbody>
 			<?php
-			if (isset($result) && $result != false) {
+			if (isset($result) && $result) {
 			while ($row = $result -> fetch_assoc()) {
 				$id = $row['p_id'];
 				$title = $row['title'];
@@ -113,20 +115,15 @@ if (!$total) {
 				$postUserID = $row['u_id'];
 				$created_at = $row['created_at'];
 				$updated_at = $row['updated_at'];
-				
 				?>
-
 				<tr>
-					<td><?php
-						echo $id ?></td>
-					<td><a href="post.php?id=<?= $id ?>"><?php
-							echo $title ?></a></td>
-					<td><?php
-						echo $name ?></td>
-					<td><?php
-						echo $created_at ?></td>
-					<td><?php
-						echo $updated_at ?></td>
+					<td><?php echo $id ?></td>
+					<td>
+						<a href="post.php?id=<?= $id ?>"><?php echo $title ?></a>
+					</td>
+					<td><?php echo $name ?></td>
+					<td><?php echo $created_at ?></td>
+					<td><?php echo $updated_at ?></td>
 					<?php
 					if (isset($_SESSION['userId'])) :
 						?>
@@ -196,6 +193,5 @@ if (!$total) {
         if (result) {
             location.href = 'delete.php?postId=' + id;
         }
-
     }
 </script>

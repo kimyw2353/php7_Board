@@ -12,7 +12,7 @@ $userId = $_SESSION['userId'];
 	</head>
 	<body>
 		<h1>글 작성하기</h1>
-		<form action="../form/writeForm.php" name="writeF" id="writeF" method="post">
+		<form action="../form/writePostForm.php" name="writeF" id="writeF" method="post">
 			<input type="hidden" value="<?=$userId?>" name="userId">
 			<input type="text" placeholder="제목" name="input_title" id="title"><br>
 			<textarea placeholder="내용" name="input_contents" id="contents"></textarea><br>
@@ -29,10 +29,11 @@ $userId = $_SESSION['userId'];
             return;
         }
         if (!document.writeF.contents.value){
-            alert("내용을입력하세요.");
+            alert("내용을 입력하세요.");
             document.writeF.contents.focus();
             return;
         }
         document.writeF.submit();
 	}
+ 
 </script>

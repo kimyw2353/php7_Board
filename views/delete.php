@@ -1,17 +1,39 @@
 <?php
-	session_start();
+$mysqli = new mysqli("localhost", "root", "root", "php_board");
+$mysqli -> set_charset('utf8');
+
+session_start();
 if (isset($_SESSION['userId'])) {
 	$userId = $_SESSION['userId'];
 	$postId = trim($_GET['postId']);
-	$mysqli = new mysqli("localhost", "root", "root", "php_board");
-	$mysqli -> set_charset('utf8');
-	$result = $mysqli -> query("SELECT * FROM posts WHERE id = '".$postId."' AND user_id = '".$userId."'");
+	
+	$sql = "
+	SELECT *
+	FROM posts
+	WHERE id = '".$postId."'
+	AND user_id = '".$userId."'
+	";
+	
+	$result = $mysqli -> query($sql);
+	
 	if (($result -> num_rows) > 0) {
-		$result = $mysqli -> query("DELETE FROM posts WHERE id = '".$postId."'");
+		$sql = "
+		DELETE FROM posts
+        WHERE id = '".$postId."'
+		";
+		
+		$result = $mysqli -> query($sql);
+		$mysqli -> close();
+		
 		if ($result) {
 			header("location:list.php");
 		} else {
-			echo "삭제 실패";
+			?>
+			<script>
+                alert('삭제 실패.');
+                javascript:history.back();
+			</script>
+			<?php
 		}
 	} else {
 		?>
@@ -24,10 +46,10 @@ if (isset($_SESSION['userId'])) {
 } else {
 	?>
 	<script>
-		alert('권한이 없습니다.');
+        alert('권한이 없습니다.');
         javascript:history.back();
 	</script>
-<?php
-
+	<?php
+	
 }
 ?>

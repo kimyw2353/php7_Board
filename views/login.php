@@ -17,17 +17,17 @@
 	</body>
 </html>
 <script>
-	function loginCheck(){
-        if (!document.loginF.email.value){
+    function loginCheck() {
+        if (!document.loginF.email.value) {
             alert("이메일을 입력하세요.");
             document.loginF.email.focus();
             return;
         }
-        if (!document.loginF.pwd.value){
+        if (!document.loginF.pwd.value) {
             alert("비밀번호를 입력하세요.");
             document.loginF.pwd.focus();
             return;
         }
         document.loginF.submit();
-	}
+    }
 </script>

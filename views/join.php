@@ -19,23 +19,23 @@
 	</body>
 </html>
 <script>
-    function joinCheck(){
-        if (!document.joinF.name.value){
+    function joinCheck() {
+        if (!document.joinF.name.value) {
             alert("이름을 입력하세요.");
             document.joinF.name.focus();
             return;
         }
-        if (!document.joinF.email.value){
+        if (!document.joinF.email.value) {
             alert("이메일을 입력하세요.");
             document.joinF.email.focus();
             return;
         }
-        if (!document.joinF.pwd.value){
+        if (!document.joinF.pwd.value) {
             alert("비밀번호를 입력하세요.");
             document.joinF.pwd.focus();
             return;
         }
-        if (document.joinF.pwd.value != document.joinF.repwd.value){
+        if (document.joinF.pwd.value != document.joinF.repwd.value) {
             alert("비밀번호를 확인해주세요.");
             document.joinF.repwd.focus();
             return;

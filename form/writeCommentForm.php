@@ -3,16 +3,13 @@ $mysqli = new mysqli("localhost", "root", "root", "php_board");
 $mysqli -> set_charset('utf8');
 
 session_start();
-$postId = trim($_POST['post_id']);
-$inputTitle = trim($_POST['input_title']);
-$inputContents = trim($_POST['input_contents']);
+$userId = $_SESSION['userId'];
+$postId = $_POST['post_id'];
+$inputComment = trim($_POST['input_comment']);
 
 $sql = "
-UPDATE posts
-SET title = '".$inputTitle."',
-contents = '".$inputContents."',
-updated_at = DEFAULT
-WHERE id = $postId
+INSERT INTO comments (user_id, post_id, comment)
+VALUES ('".$userId."', '".$postId."', '".$inputComment."')
 ";
 
 $result = $mysqli -> query($sql);
@@ -26,5 +23,5 @@ if (!$result) {
 	</script>
 	<?php
 } else {
-	header("location:../views/list.php");
+	header("location:../views/post.php?id=".$postId);
 }
